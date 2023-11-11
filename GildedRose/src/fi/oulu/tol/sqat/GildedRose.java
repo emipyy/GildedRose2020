@@ -31,33 +31,45 @@ public class GildedRose {
     public static void updateQuality()
     {
         for (int i = 0; i < items.size(); i++)
-        {
+        {	// if item is not aged brie or backstage passes
             if ((!"Aged Brie".equals(items.get(i).getName())) && !"Backstage passes to a TAFKAL80ETC concert".equals(items.get(i).getName())) 
-            {
+            {	// if quality is over 0
                 if (items.get(i).getQuality() > 0)
-                {
+                {	// if item is not sulfuras
                     if (!"Sulfuras, Hand of Ragnaros".equals(items.get(i).getName()))
-                    {
-                        items.get(i).setQuality(items.get(i).getQuality() - 1);
+                    {	// if item is not conjured
+                    	if (!items.get(i).getName().startsWith("Conjured")) 
+                    	{
+                    		// reduce item's quality by 1
+                            items.get(i).setQuality(items.get(i).getQuality() - 1);
+                    	}
+                    	else {
+                    		
+                    		// reduce quality by 2, because conjured items
+                    		// expire twice as fast as the others
+                    		items.get(i).setQuality(items.get(i).getQuality() - 2);
+                    	}
+                    	
                     }
                 }
             }
             else
-            {
+            {	// if item is aged brie or backstage passes, get quality of less than 50
                 if (items.get(i).getQuality() < 50)
-                {
+                {	// and increase its quality by 1
                     items.get(i).setQuality(items.get(i).getQuality() + 1);
-
+                    // if it is backstage passes item
                     if ("Backstage passes to a TAFKAL80ETC concert".equals(items.get(i).getName()))
-                    {
+                    {	// if less than 11 days left to sell
                         if (items.get(i).getSellIn() < 11)
-                        {
+                        {	// if quality is less than 50
                             if (items.get(i).getQuality() < 50)
-                            {
+                            {	// increase its quality by 1
                                 items.get(i).setQuality(items.get(i).getQuality() + 1);
                             }
                         }
-
+                        // if less than 6 days left to sell
+                        // increase the quality by 1
                         if (items.get(i).getSellIn() < 6)
                         {
                             if (items.get(i).getQuality() < 50)
@@ -68,35 +80,44 @@ public class GildedRose {
                     }
                 }
             }
-
+            // if it is not sulfuras, reduce days left to sell by 1
             if (!"Sulfuras, Hand of Ragnaros".equals(items.get(i).getName()))
             {
                 items.get(i).setSellIn(items.get(i).getSellIn() - 1);
             }
-
+            // if days left to sell is less than 0
             if (items.get(i).getSellIn() < 0)
-            {
+            {	// if it is not aged brie
                 if (!"Aged Brie".equals(items.get(i).getName()))
-                {
+                {	// if it is not backstage passes
                     if (!"Backstage passes to a TAFKAL80ETC concert".equals(items.get(i).getName()))
-                    {
+                    {	// get quality of over 0
                         if (items.get(i).getQuality() > 0)
-                        {
+                        {	// if it is not sulfuras
                             if (!"Sulfuras, Hand of Ragnaros".equals(items.get(i).getName()))
-                            {
-                                items.get(i).setQuality(items.get(i).getQuality() - 1);
+                            {	// if it is not a conjured item
+                            	if (!items.get(i).getName().startsWith("Conjured")) {
+                            		// reduce quality by 1
+                                    items.get(i).setQuality(items.get(i).getQuality() - 1);
+                            	}
+                            	else {
+                            		// reduce quality by 2, because it is conjured item
+                            		items.get(i).setQuality(items.get(i).getQuality() - 2);
+                            	}
+                            	
                             }
                         }
                     }
                     else
-                    {
+                    {	// but if it is backstage passes, set quality to 0
+                    	// because concert ended
                         items.get(i).setQuality(items.get(i).getQuality() - items.get(i).getQuality());
                     }
                 }
                 else
-                {
+                {	// if it is aged brie, get quality less than 50
                     if (items.get(i).getQuality() < 50)
-                    {
+                    {	// and increase it by 1
                         items.get(i).setQuality(items.get(i).getQuality() + 1);
                     }
                 }
