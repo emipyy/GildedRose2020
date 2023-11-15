@@ -64,8 +64,9 @@ public class GildedRose {
             {	// if item is aged brie or backstage passes, get quality of less than 50
             	// check if quality is more than 50 
             	if (items.get(i).getQuality() > 50) {
-            		items.get(i).setQuality(50);
+            		throw new IllegalArgumentException("Quality can't be over 50");
             	}
+            	
                 if (items.get(i).getQuality() < 50)
                 {	// and increase its quality by 1
                     items.get(i).setQuality(items.get(i).getQuality() + 1);
@@ -90,6 +91,7 @@ public class GildedRose {
                         }
                     }
                 }
+               
             }
             // if it is not sulfuras, reduce days left to sell by 1
             if (!"Sulfuras, Hand of Ragnaros".equals(items.get(i).getName()))
@@ -117,6 +119,9 @@ public class GildedRose {
                             	}
                             	
                             }
+                        }
+                        else {
+                        	throw new IllegalArgumentException("Quality can't be below 0");
                         }
                     }
                     else

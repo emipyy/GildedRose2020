@@ -138,14 +138,12 @@ public class GildedRoseTest {
 		
 	}
 	
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void testPassOver50() {
 		GildedRose inn = new GildedRose();
 		inn.setItem(new Item("Backstage passes to a TAFKAL80ETC concert", 10, 55));
 		inn.oneDay();
-		List<Item> items = inn.getItems();
-		int quality = items.get(0).getQuality();
-		assertEquals("Failed quality test for pass. Quality should not be over 50", 50, quality);
+		
 		
 	}
 	
@@ -171,10 +169,114 @@ public class GildedRoseTest {
 
 	}
 	
+	//EXERCISE 4
+	//quality is 0 and item is not brie or pass
+	@Test(expected = IllegalArgumentException.class)
+	public void testMutationIs0() {
+		GildedRose inn = new GildedRose();
+		inn.setItem(new Item("+5 Dexterity Vest", 10, 0));
+		inn.oneDay();
+
+	}
 	
 
+	//EXERCISE 4
+	//quality is 50 and item is brie or pass
+	@Test
+	public void testMutationIs50() {
+		GildedRose inn = new GildedRose();
+		inn.setItem(new Item("Backstage passes to a TAFKAL80ETC concert",11, 50));
+		inn.oneDay();
+		List<Item> items = inn.getItems();
+		int quality = items.get(0).getQuality();
+        assertEquals(50, quality);
 
+	}
 	
+	
+	//EXERCISE 4
+	//quality is less than 50 and item is pass and sellin is 11. This killed 3 
+	@Test
+	public void testMutationIs () {
+		GildedRose inn = new GildedRose();
+		inn.setItem(new Item("Backstage passes to a TAFKAL80ETC concert",11, 10));
+		inn.oneDay();
+		List<Item> items = inn.getItems();
+		int quality = items.get(0).getQuality();
+        assertEquals(11, quality);
+	}
+	
+	//EXERCISE 4
+	//quality is less than 50 and item is pass and sellin is 10. This killed 2
+	@Test
+	public void testMutationIs50Pass() {
+		GildedRose inn = new GildedRose();
+		inn.setItem(new Item("Backstage passes to a TAFKAL80ETC concert",10, 49));
+		inn.oneDay();
+		List<Item> items = inn.getItems();
+		int quality = items.get(0).getQuality();
+        assertEquals(50, quality);
+	}
+	
+	//EXERCISE 4
+	//quality is less than 50 and item is pass and sellin is 10. 9 survives at this point
+	@Test
+	public void testMutationIs48Pass() {
+		GildedRose inn = new GildedRose();
+		inn.setItem(new Item("Backstage passes to a TAFKAL80ETC concert",10, 48));
+		inn.oneDay();
+		List<Item> items = inn.getItems();
+		int quality = items.get(0).getQuality();
+	    assertEquals(50, quality);
+		
+	}
+	
+	//EXERCISE 4
+	//quality is less than 50 and item is pass and sellin is 6. 
+	@Test
+	public void testMutationIs6Pass() {
+		GildedRose inn = new GildedRose();
+		inn.setItem(new Item("Backstage passes to a TAFKAL80ETC concert",6, 10));
+		inn.oneDay();
+		List<Item> items = inn.getItems();
+		int quality = items.get(0).getQuality();
+        assertEquals(12, quality);
+	}
+	
+	//EXERCISE 4
+	//quality is less than 50 and item is pass and sellin is 5. 5 survives at this point
+	@Test
+	public void testMutationIs5Pass() {
+		GildedRose inn = new GildedRose();
+		inn.setItem(new Item("Backstage passes to a TAFKAL80ETC concert",5, 10));
+		inn.oneDay();
+		List<Item> items = inn.getItems();
+		int quality = items.get(0).getQuality();
+        assertEquals(13, quality);
+	}
+	
+	//EXERCISE 4
+	//quality is 48 and item is pass and sellin is 5. 4 survives at this point
+	@Test
+	public void testMutationIs5Pass48() {
+		GildedRose inn = new GildedRose();
+		inn.setItem(new Item("Backstage passes to a TAFKAL80ETC concert",5, 48));
+		inn.oneDay();
+		List<Item> items = inn.getItems();
+		int quality = items.get(0).getQuality();
+        assertEquals(50, quality);
+	}
+	
+	
+	//EXERCISE 4
+	//quality becomes negative during loop
+	@Test(expected = IllegalArgumentException.class)
+	public void testMutationSellIn0() {
+		GildedRose inn = new GildedRose();
+		inn.setItem(new Item("+5 Dexterity Vest",0, 1));
+		inn.oneDay();
+
+	}
 	
 	
 	
